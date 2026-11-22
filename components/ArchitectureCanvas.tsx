@@ -13,7 +13,6 @@ import {
   CheckCircle2, 
   ArrowRight,
   Activity,
-  Layers,
   Sparkles,
   Zap
 } from "lucide-react";
@@ -40,15 +39,15 @@ export function ArchitectureCanvas() {
   const getNodeIcon = (type: ArchNode["type"]) => {
     switch (type) {
       case "client":
-        return <Smartphone className="w-4 h-4 text-cyan-400" />;
+        return <Smartphone className="w-5 h-5 text-cyan-400" />;
       case "gateway":
-        return <Server className="w-4 h-4 text-indigo-400" />;
+        return <Server className="w-5 h-5 text-indigo-400" />;
       case "engine":
-        return <Cpu className="w-4 h-4 text-emerald-400" />;
+        return <Cpu className="w-5 h-5 text-emerald-400" />;
       case "database":
-        return <Database className="w-4 h-4 text-amber-400" />;
+        return <Database className="w-5 h-5 text-amber-400" />;
       case "ops":
-        return <Terminal className="w-4 h-4 text-purple-400" />;
+        return <Terminal className="w-5 h-5 text-purple-400" />;
     }
   };
 
@@ -60,21 +59,21 @@ export function ArchitectureCanvas() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="space-y-3 max-w-xl">
             <div className="flex items-center gap-2 text-xs font-mono text-cyan-400">
-              <span>02 // ARCHITECTURE</span>
+              <span>02 // ARCHITECTURE CIRCUIT</span>
               <span className="text-neutral-600">•</span>
-              <span className="text-neutral-400">DISTRIBUTED SYSTEM TOPOLOGY</span>
+              <span className="text-neutral-400">DISTRIBUTED DATA TOPOLOGY</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white">
-              System Design & Data Topology.
+              The System Circuit.
             </h2>
             <p className="text-sm text-neutral-400 leading-relaxed font-light">
-              Interactive structural topologies showcasing how user requests traverse edge gateways, 
-              knowledge vaults, vector stores, and relational ACID clusters.
+              Interactive topologies mapping client requests across edge gateways, 
+              knowledge vaults, vector embeddings, and container clusters.
             </p>
           </div>
 
           {/* Architecture Switcher */}
-          <div className="flex items-center gap-2 p-1 rounded-xl bg-neutral-900 border border-white/[0.08]">
+          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-neutral-900 border border-white/[0.08]">
             {architectures.map((arch, idx) => (
               <button
                 key={arch.id}
@@ -92,143 +91,122 @@ export function ArchitectureCanvas() {
           </div>
         </div>
 
-        {/* Visual Pipeline Layout with Animated Wires */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* The Circuit Board Box */}
+        <div className="p-8 sm:p-10 rounded-3xl bg-neutral-950 border border-white/10 shadow-2xl space-y-8 relative overflow-hidden">
           
-          {/* Topology Pipeline (7 cols) */}
-          <div className="lg:col-span-7 space-y-4">
-            <div className="p-6 rounded-2xl bg-black/60 border border-white/[0.08] backdrop-blur-xl space-y-6">
-              
-              <div className="flex items-center justify-between pb-3 border-b border-white/[0.06] font-mono text-xs text-neutral-400">
-                <span className="flex items-center gap-2">
-                  <Activity className="w-3.5 h-3.5 text-cyan-400" />
-                  Active Data Pipeline
-                </span>
-                <span className="text-emerald-400 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                  Live Reactive Path
-                </span>
-              </div>
+          {/* Subtle Circuit Grid Background */}
+          <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
 
-              {/* Node Sequence List */}
-              <div className="space-y-3 relative">
-                {currentArch.nodes.map((node, i) => {
-                  const isActive = node.id === activeNodeId;
+          {/* Top Circuit Status Bar */}
+          <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/[0.08] font-mono text-xs">
+            <div className="flex items-center gap-3">
+              <span className="px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-semibold">
+                TOPOLOGY_ACTIVE
+              </span>
+              <span className="text-neutral-400">
+                {currentArch.tagline}
+              </span>
+            </div>
 
-                  return (
-                    <div
-                      key={node.id}
-                      onClick={() => handleNodeClick(node.id)}
-                      className={`p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-4 group ${
-                        isActive
-                          ? "bg-neutral-900/90 border-cyan-500/50 shadow-lg shadow-cyan-950/40"
-                          : "bg-neutral-950/40 border-white/[0.04] hover:border-white/10 hover:bg-neutral-900/30"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3.5">
-                        <div className={`p-2 rounded-lg border ${
-                          isActive
-                            ? "bg-cyan-500/10 border-cyan-500/30"
-                            : "bg-neutral-900 border-white/[0.06]"
-                        }`}>
-                          {getNodeIcon(node.type)}
-                        </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-sm font-semibold text-white group-hover:text-cyan-300 transition-colors">
-                              {node.label}
-                            </span>
-                            <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-white/[0.04] text-neutral-400 border border-white/[0.04]">
-                              {node.type}
-                            </span>
-                          </div>
-                          <p className="text-xs font-mono text-neutral-400 mt-0.5 line-clamp-1">
-                            {node.tech}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="shrink-0 font-mono text-xs flex items-center gap-2">
-                        <span className="text-neutral-500 text-[11px] hidden sm:inline">
-                          0{i + 1}
-                        </span>
-                        <div className={`w-2 h-2 rounded-full ${isActive ? "bg-cyan-400" : "bg-neutral-700"}`} />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Data Flow Stepper */}
-              <div className="pt-4 border-t border-white/[0.06] space-y-2">
-                <span className="text-xs font-mono text-neutral-500 uppercase tracking-wider block mb-2">
-                  Execution Pathway
-                </span>
-                <div className="space-y-1.5 font-mono text-xs">
-                  {currentArch.dataFlow.map((step, sIdx) => (
-                    <div
-                      key={sIdx}
-                      className="p-2 rounded bg-neutral-950/60 border border-white/[0.03] text-neutral-300 flex items-start gap-2"
-                    >
-                      <span className="text-cyan-400 font-bold">→</span>
-                      <span>{step}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
+            <div className="flex items-center gap-2 text-emerald-400 text-[11px]">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span>Reactive Signal Loop</span>
             </div>
           </div>
 
-          {/* Node Spec Drawer (5 cols) */}
-          <div className="lg:col-span-5">
-            <div className="sticky top-28 p-6 sm:p-7 rounded-2xl bg-neutral-950 border border-cyan-500/30 backdrop-blur-2xl shadow-2xl space-y-6">
+          {/* Interactive Node Chain */}
+          <div className="relative z-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            {currentArch.nodes.map((node, i) => {
+              const isActive = node.id === activeNodeId;
+
+              return (
+                <button
+                  key={node.id}
+                  onClick={() => handleNodeClick(node.id)}
+                  className={`p-4 rounded-2xl border text-left transition-all cursor-pointer relative group flex flex-col justify-between h-36 ${
+                    isActive
+                      ? "bg-neutral-900 border-cyan-500/60 shadow-xl shadow-cyan-950/40"
+                      : "bg-neutral-950/80 border-white/[0.06] hover:border-white/20 hover:bg-neutral-900/40"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="p-2 rounded-xl bg-black border border-white/10">
+                      {getNodeIcon(node.type)}
+                    </div>
+                    <span className="font-mono text-[10px] text-neutral-500">
+                      0{i + 1}
+                    </span>
+                  </div>
+
+                  <div>
+                    <h4 className="text-xs font-semibold text-white group-hover:text-cyan-300 transition-colors line-clamp-1">
+                      {node.label}
+                    </h4>
+                    <p className="text-[10px] font-mono text-neutral-400 line-clamp-1 mt-0.5">
+                      {node.tech.split(",")[0]}
+                    </p>
+                  </div>
+
+                  {/* Active Indicator Bar */}
+                  <div className={`h-[2px] rounded-full transition-all ${
+                    isActive ? "bg-cyan-400 shadow-sm shadow-cyan-400" : "bg-transparent"
+                  }`} />
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Detailed Node HUD (Interactive Telemetry Panel) */}
+          <div className="relative z-10 p-6 sm:p-8 rounded-2xl bg-black/80 border border-white/[0.08] backdrop-blur-xl">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               
-              <div className="pb-4 border-b border-white/[0.08]">
-                <div className="flex items-center justify-between text-xs font-mono text-neutral-400 mb-2">
-                  <span className="text-cyan-400 uppercase tracking-wider">
-                    [NODE TELEMETRY]
-                  </span>
-                  <span>{selectedNode.type.toUpperCase()}</span>
+              {/* Left: Active Node Specs (7 cols) */}
+              <div className="lg:col-span-7 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-neutral-900 border border-white/10">
+                    {getNodeIcon(selectedNode.type)}
+                  </div>
+                  <div>
+                    <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-wider block">
+                      Stage Telemetry • {selectedNode.type}
+                    </span>
+                    <h3 className="text-xl font-bold text-white">
+                      {selectedNode.label}
+                    </h3>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold text-white flex items-center gap-2.5">
-                  {getNodeIcon(selectedNode.type)}
-                  {selectedNode.label}
-                </h3>
-                <p className="text-xs font-mono text-neutral-400 mt-1">
-                  {selectedNode.role}
-                </p>
-              </div>
 
-              {/* Technologies in this node */}
-              <div>
-                <span className="text-xs font-mono text-neutral-500 uppercase tracking-wider block mb-2">
-                  Core Runtime
-                </span>
-                <div className="p-3 rounded-xl bg-neutral-900 border border-white/[0.06] font-mono text-xs text-cyan-200">
-                  {selectedNode.tech}
+                <div className="p-3 rounded-xl bg-neutral-900/60 border border-white/[0.04] font-mono text-xs text-neutral-300">
+                  <span className="text-neutral-500 block mb-0.5 text-[10px] uppercase">Runtime Stack:</span>
+                  <span className="text-cyan-300">{selectedNode.tech}</span>
                 </div>
-              </div>
 
-              {/* Architectural Verification Points */}
-              <div>
-                <span className="text-xs font-mono text-neutral-500 uppercase tracking-wider block mb-3">
-                  Implementation Guarantees
-                </span>
-                <div className="space-y-2.5">
+                <div className="space-y-2 pt-1 font-mono text-xs">
                   {selectedNode.details.map((detail, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 text-xs text-neutral-300 leading-relaxed">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <div key={idx} className="flex items-start gap-2 text-neutral-300">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
                       <span>{detail}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Design Decision Insight */}
-              <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-xs text-neutral-400 font-light leading-relaxed">
-                <span className="text-neutral-200 font-medium block mb-1">Architectural Trade-off:</span>
-                Engineered with strict zero-coupling boundaries to allow independent scaling, localized benchmarking, and sub-millisecond serialization.
+              {/* Right: Step-by-Step Execution Sequence (5 cols) */}
+              <div className="lg:col-span-5 space-y-3 font-mono text-xs lg:border-l lg:border-white/[0.08] lg:pl-8">
+                <span className="text-neutral-500 uppercase tracking-wider block text-[11px]">
+                  Execution Pipeline Flow
+                </span>
+                <div className="space-y-1.5">
+                  {currentArch.dataFlow.slice(0, 4).map((step, sIdx) => (
+                    <div
+                      key={sIdx}
+                      className="p-2 rounded bg-neutral-950 border border-white/[0.04] text-neutral-300 flex items-start gap-2 text-[11px]"
+                    >
+                      <span className="text-cyan-400 font-bold shrink-0">→</span>
+                      <span className="line-clamp-2">{step}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
             </div>
