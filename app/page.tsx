@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { ModeProvider } from "@/components/ModeContext";
+import { InteractiveConstellation } from "@/components/ui/InteractiveConstellation";
 import { SpotlightCanvas } from "@/components/ui/SpotlightCanvas";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
-import { ArchitectureView } from "@/components/ArchitectureView";
-import { BentoProjects } from "@/components/BentoProjects";
-import { SkillsMatrix } from "@/components/SkillsMatrix";
-import { Experience } from "@/components/Experience";
-import { ContactSection } from "@/components/ContactSection";
+import { WorkShowcase } from "@/components/WorkShowcase";
+import { ArchitectureCanvas } from "@/components/ArchitectureCanvas";
+import { SkillsMinimal } from "@/components/SkillsMinimal";
+import { ExperienceMinimal } from "@/components/ExperienceMinimal";
+import { ContactMinimal } from "@/components/ContactMinimal";
 import { Footer } from "@/components/Footer";
 import { CommandPalette } from "@/components/CommandPalette";
 import { TerminalWidget } from "@/components/TerminalWidget";
@@ -28,34 +30,39 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-cyan-500/20 selection:text-cyan-300">
-      {/* Interactive Ambient Cursor Glow */}
-      <SpotlightCanvas />
+    <ModeProvider>
+      <main className="relative min-h-screen bg-black text-neutral-100 flex flex-col selection:bg-cyan-500/20 selection:text-cyan-300 overflow-x-hidden">
+        {/* Interactive Vector Constellation Canvas */}
+        <InteractiveConstellation />
 
-      {/* Floating Navigation */}
-      <Navbar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
+        {/* Ambient Cursor Spotlight */}
+        <SpotlightCanvas />
 
-      {/* Content Sections */}
-      <div className="flex-1 space-y-4">
-        <Hero />
-        <ArchitectureView />
-        <BentoProjects />
-        <SkillsMatrix />
-        <Experience />
-        <ContactSection />
-      </div>
+        {/* Refined Floating Navbar */}
+        <Navbar onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
 
-      {/* Footer */}
-      <Footer />
+        {/* Core Layout Sections */}
+        <div className="flex-1 space-y-0">
+          <Hero />
+          <WorkShowcase />
+          <ArchitectureCanvas />
+          <SkillsMinimal />
+          <ExperienceMinimal />
+          <ContactMinimal />
+        </div>
 
-      {/* Interactive Raycast-Style Command Palette (Cmd+K) */}
-      <CommandPalette
-        isOpen={commandPaletteOpen}
-        onClose={() => setCommandPaletteOpen(false)}
-      />
+        {/* Footer */}
+        <Footer />
 
-      {/* Interactive Draggable Terminal Easter Egg */}
-      <TerminalWidget />
-    </main>
+        {/* Quick Command Launcher (Cmd+K) */}
+        <CommandPalette
+          isOpen={commandPaletteOpen}
+          onClose={() => setCommandPaletteOpen(false)}
+        />
+
+        {/* Bottom Interactive Terminal Pill */}
+        <TerminalWidget />
+      </main>
+    </ModeProvider>
   );
 }
